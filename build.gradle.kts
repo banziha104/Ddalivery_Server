@@ -62,10 +62,11 @@ subprojects {
 	}
 }
 
+
 project("ddalivery-api"){
 	dependencies {
+		compile(project(":ddalivery-core"))
 		compile(project(":ddalivery-common"))
-
 		compile("de.codecentric:spring-boot-admin-starter-client:2.1.4")
 		compile("org.springframework.boot:spring-boot-starter-web")
 		compile("org.springframework.boot:spring-boot-starter-security")
