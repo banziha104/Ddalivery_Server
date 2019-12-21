@@ -21,6 +21,7 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin") // 요부분을 apply { plugin("kotlin")} -> apply(plugin="kotlin")
     apply(plugin = "kotlin-kapt")
+    apply(plugin = "kotlin-jpa")
     apply(plugin = "org.asciidoctor.convert")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
@@ -35,7 +36,7 @@ subprojects {
         compile("org.jetbrains.kotlin:kotlin-reflect")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         compile("org.springframework.boot:spring-boot-starter-logging")
-
+        compile("org.jetbrains.kotlin:kotlin-noarg:1.3.21")
         //Spring Boot
         implementation("org.springframework.boot:spring-boot-starter-data-jpa")
         implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -125,6 +126,9 @@ project("ddalivery-common") {
 
     bootJar.enabled = false
     jar.enabled = true
+    dependencies {
+        compile(project(":ddalivery-core"))
+    }
 
 }
 
@@ -135,6 +139,7 @@ project("ddalivery-core") {
 	bootJar.enabled = false
 	jar.enabled = true
 }
+
 project("ddalivery-api") {
     dependencies {
         compile(project(":ddalivery-core"))

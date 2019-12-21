@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController
 @Slf4j
 class ProductController {
     @GetMapping("{message}")
-    fun getThis(@PathVariable("message") message : String) : ABC<String>{
-        val test = ApiResponseFactory.createOK(message)
+    fun getThis(@PathVariable("message") message : String) : ApiResponse<ABC<Int>>{
+        val test = ApiResponseFactory.createOK(ABCF<Int>().getDefault())
         print(test)
 //        return ApiResponseFactory.createOK(message)
-        return ABCF().getDefault()
+        return test
     }
 }
 
@@ -27,11 +27,10 @@ class ABC<T>{
     var c : T? = null
 }
 
-class ABCF{
-    fun getDefault() : ABC<String>{
-        val abc = ABC<String>();
+class ABCF<T>{
+    fun getDefault() : ABC<T>{
+        val abc = ABC<T>()
         abc.a = "a"
-        abc.c = "2"
         return abc
     }
 }
