@@ -44,7 +44,7 @@ configurations {
     compile.exclude module: 'spring-boot-starter-tomcat'
     // exclude logback. for use log4j2 lazy evaluation logger.
 //    compile.exclude module: 'spring-boot-starter-logging'
-}f
+}
 
 dependencies {
     //compile(":api-common")
@@ -60,7 +60,6 @@ dependencies {
     //compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
-    runtimeOnly 'org.mysql.jdbc:mysql-java-client'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 

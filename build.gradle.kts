@@ -21,7 +21,6 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin") // 요부분을 apply { plugin("kotlin")} -> apply(plugin="kotlin")
     apply(plugin = "kotlin-kapt")
-    apply(plugin = "kotlin-jpa")
     apply(plugin = "org.asciidoctor.convert")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
