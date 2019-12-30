@@ -1,18 +1,12 @@
 package com.lyj.ddalivery.ddalivery.config
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.PropertyNamingStrategy
-import com.fasterxml.jackson.databind.SerializationFeature
+import ddalivery.jwt.JwtTokenProvider
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
 import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar
 import org.springframework.format.support.DefaultFormattingConversionService
@@ -33,17 +27,19 @@ import java.time.format.DateTimeFormatter
 class AppConfig {
 
     @Bean
-    fun modelMapper(): ModelMapper {
-        return ModelMapper()
-    }
+    fun modelMapper(): ModelMapper = ModelMapper()
+
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+
+
+    @Bean
+    fun jwtTokenProvider() : JwtTokenProvider = JwtTokenProvider()
 
     @Bean
     fun conversionService(): FormattingConversionService {
+        println("=================ok1=======================")
         val conversionService = DefaultFormattingConversionService(false)
         val registrar = DateTimeFormatterRegistrar()
         registrar.setDateFormatter(DateTimeFormatter.ofPattern("yyyy.MM.dd"))

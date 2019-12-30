@@ -41,7 +41,7 @@ def commonsLoggingVersion = '1.2'
 
 configurations {
     // exclude embeded tomcat
-    compile.exclude module: 'spring-boot-starter-tomcat'
+//    compile.exclude module: 'spring-boot-starter-tomcat'
     // exclude logback. for use log4j2 lazy evaluation logger.
 //    compile.exclude module: 'spring-boot-starter-logging'
 }

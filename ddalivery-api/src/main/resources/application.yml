@@ -21,12 +21,4 @@ logging:
     root: info
     org:
       hibernate:
-        type: trace
-
-
-#bnids-app:
-#  jwt:
-#    tokenExpirationTime: 365 # day
-#    refreshTokenExpTime: 365 # day
-#    tokenIssuer: 'http://bnids.com'
-#    tokenSigningKey: 'bnidstoken'
+        type: debug

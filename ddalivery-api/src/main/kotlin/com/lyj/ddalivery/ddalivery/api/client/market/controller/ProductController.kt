@@ -19,6 +19,11 @@ class ProductController {
 //        return ApiResponseFactory.createOK(message)
         return test
     }
+
+    @GetMapping()
+    fun test() : ApiResponse<String>{
+        return ApiResponseFactory.createOK("OK")
+    }
 }
 
 class ABC<T>{

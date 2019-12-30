@@ -1,5 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-noarg:1.3.21")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:1.3.21")
+    }
+}
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.21"
@@ -21,6 +27,9 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin") // 요부분을 apply { plugin("kotlin")} -> apply(plugin="kotlin")
     apply(plugin = "kotlin-kapt")
+    apply(plugin = "kotlin-spring")
+    apply(plugin = "kotlin-allopen")
+    apply(plugin = "kotlin-jpa")
     apply(plugin = "org.asciidoctor.convert")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
@@ -31,6 +40,8 @@ subprojects {
     version = "1.0.0"
 
     dependencies {
+
+
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
         compile("org.jetbrains.kotlin:kotlin-reflect")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -68,6 +79,7 @@ subprojects {
 
 
         // Utils
+        compile("io.jsonwebtoken:jjwt:0.9.1")
         compile("org.modelmapper:modelmapper:2.3.2")
         compile("com.google.guava:guava:27.0-jre")
         compile("eu.bitwalker:UserAgentUtils:1.21")
