@@ -20,15 +20,13 @@ class LoginService @Autowired constructor(
         private val jwtTokenProvider: JwtTokenProvider,
         private val passwordEncoder: PasswordEncoder
 ) {
-
-
     @Transactional
     fun createUserToken(dto: LoginDto): ApiResponse<*> {
         val result = accountRepository.findByLoginId(dto.loginId)
 
         result?.let {
             return if (passwordEncoder.matches(dto.loginPassword, it.loginPassword)) {
-                val session = JWTSession(it.accountId,it.loginId, it.address, it.name)
+                val session = JWTSession(it.accountId,it.loginId, it.address, it.userName)
                 ApiResponseFactory.createOK(TokenDto(jwtTokenProvider.createToken(session)))
             } else {
                 ApiResponseFactory.createException(PasswordInCorrectException())

@@ -1,0 +1,106 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+= API Document
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== 소개
+
+따리버리 API 서버 문서입니다.
+
+[[common]]
+== 공통 사항
+
+API에 관계없이 아래 사항을 지켜주셔야 합니다.
+
+=== Domain
+
+|===
+| 환경 | Domain
+
+| 개발서버
+| `http://ec2-54-180-97-228.ap-northeast-2.compute.amazonaws.com`
+
+| 운영서버
+| `https://`
+|===
+
+[[overview-http-verbs]]
+== HTTP 동사
+
+본 REST API에서 사용하는 HTTP 동사(verbs)는 가능한한 표준   21HTTP와 REST 규약을 따릅니다. (로그인만 제외
+
+| `GET`
+| 리소스를 가져올 때 사용
+
+| `POST`
+| 새 리소스를 만들 때 사용
+
+| `PUT`
+| 기존 리소스를 수정할 때 사용
+
+| `PATCH`
+| 기존 리소스의 일부를 수정할 때 사용
+
+| `DELETE`
+| 기존 리소스를 삭제할 떄 사용
+|==
+
+[[overview-http-status-codes]]
+== HTTP 상태 코드
+
+본 REST API에서 사용하는 HTTP 상태 코드는 가능한한 표준 HTTP와 REST 규약을 따릅니다.
+|===
+| 상태 코드 | 용례
+
+| `200 OK`
+| 요청을 성공적으로 처리함
+...
+| `201 Created`
+| 새 리소스를 성공적으로 생성함. 응답의 `Location` 헤더에 해당 리소스의 URI가 담겨있다.
+
+| `204 No Content`
+| 기존 리소스를 성공적으로 수정함.
+
+| `400 Bad Request`
+| 잘못된 요청을 보낸 경우. 응답 본문에 더 오류에 대한 정보가 담겨있다.
+
+| `404 Not Found`
+| 요청한 리소스가 없음.
+|===
+&#160;
+
+[[account]]
+== 유저 관련
+
+[[login]]
+=== 로그인
+
+==== 요청
+include::{snippets}/account/login/http-request.adoc[]
+include::{snippets}/account/login/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/account/login/http-response.adoc[]
+include::{snippets}/account/login/response-fields-data.adoc[]
+
+
+&#160;
+
+[[signUp]]
+=== 회원가입
+
+==== 요청
+include::{snippets}/account/signUp/http-request.adoc[]
+include::{snippets}/account/signUp/request-fields.adoc[]
+
+==== 응답
+include::{snippets}/account/signUp/http-response.adoc[]
+include::{snippets}/account/signUp/response-fields.adoc[]
+
+&#160;

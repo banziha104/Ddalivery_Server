@@ -106,6 +106,12 @@ asciidoctor {
     dependsOn test
 }
 
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("build/asciidoc/html5/")
+    into file("src/main/resources/static/docs")
+}
+
 // QueryDSL
 // Gradle 4.6 이후 연동 방식이 변경됨 https://netframework.tistory.com/search/querydsl, https://qiita.com/kakasak/items/ae6a1335d68e06172d4d
 def queryDslDir = "./out/production/classes/generated"
