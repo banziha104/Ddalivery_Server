@@ -56,13 +56,13 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter-websocket")
 
-        compile("org.projectlombok:lombok:1.18.4")
+//        compile("org.projectlombok:lombok:1.18.4")
 
         /**
          * @see <a href="https://kotlinlang.org/docs/reference/kapt.html">Annotation Processing with Kotlin</a>
          */
         kapt("org.springframework.boot:spring-boot-configuration-processor")
-        compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+        compile("org.springframework.boot:spring-boot-configuration-processor")
 //h2
         compile("com.h2database:h2")
 
@@ -86,15 +86,16 @@ subprojects {
         compile("org.imgscalr:imgscalr-lib:4.2")
 
         //Compile Only
-        compileOnly ("org.projectlombok:lombok")
+//        compileOnly ("org.projectlombok:lombok")
 
         // Runtime
         runtimeOnly("mysql:mysql-connector-java")
         runtimeOnly("org.springframework.boot:spring-boot-devtools")
-
+        implementation("com.thinkinglogic.builder:kotlin-builder-annotation:1.2.0")
+        kapt ("com.thinkinglogic.builder:kotlin-builder-processor:1.2.0")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         // Gradle 4.6 and later
-        annotationProcessor("org.projectlombok:lombok")
+//        annotationProcessor("org.projectlombok:lombok")
 
         // Test
         testImplementation("io.projectreactor:reactor-test")

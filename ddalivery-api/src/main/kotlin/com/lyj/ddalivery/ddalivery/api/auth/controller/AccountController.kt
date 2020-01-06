@@ -7,7 +7,6 @@ import com.lyj.ddalivery.ddalivery.api.auth.service.AccountService
 import com.lyj.ddalivery.ddalivery.api.auth.service.LoginService
 import com.lyj.ddalivery.ddalivery.api.response.ApiResponse
 import com.lyj.ddalivery.ddalivery.api.response.ApiResponseFactory
-import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(value = ["/api/account"])
-@Slf4j
 class AccountController @Autowired constructor(
         private val loginService: LoginService,
         private val accountService: AccountService

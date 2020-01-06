@@ -25,3 +25,9 @@ spring:
   h2:
     console:
       enabled: true
+
+
+
+ddalivery-app:
+  path:
+    productImagePath: '/usr/local/ddalivery/product'

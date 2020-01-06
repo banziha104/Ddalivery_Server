@@ -22,3 +22,8 @@ logging:
     org:
       hibernate:
         type: debug
+
+
+ddalivery:
+  path:
+    productImagePath: '/usr/local/ddalivery/product'

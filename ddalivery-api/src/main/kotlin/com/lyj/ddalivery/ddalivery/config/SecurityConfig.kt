@@ -1,6 +1,5 @@
 package com.lyj.ddalivery.ddalivery.config
 
-import lombok.RequiredArgsConstructor
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,7 +14,6 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 //    @Bean
