@@ -22,3 +22,12 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+  h2:
+    console:
+      enabled: true
+
+
+
+ddalivery-app:
+  path:
+    productImagePath: '/usr/local/ddalivery/product'

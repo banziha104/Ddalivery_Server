@@ -1,5 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-noarg:1.3.21")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:1.3.21")
+    }
+}
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.21"
@@ -21,6 +27,8 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin") // 요부분을 apply { plugin("kotlin")} -> apply(plugin="kotlin")
     apply(plugin = "kotlin-kapt")
+    apply(plugin = "kotlin-spring")
+    apply(plugin = "kotlin-allopen")
     apply(plugin = "kotlin-jpa")
     apply(plugin = "org.asciidoctor.convert")
     apply(plugin = "org.springframework.boot")
@@ -32,6 +40,8 @@ subprojects {
     version = "1.0.0"
 
     dependencies {
+
+
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
         compile("org.jetbrains.kotlin:kotlin-reflect")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -46,13 +56,13 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter-websocket")
 
-        compile("org.projectlombok:lombok:1.18.4")
+//        compile("org.projectlombok:lombok:1.18.4")
 
         /**
          * @see <a href="https://kotlinlang.org/docs/reference/kapt.html">Annotation Processing with Kotlin</a>
          */
         kapt("org.springframework.boot:spring-boot-configuration-processor")
-        compileOnly("org.springframework.boot:spring-boot-configuration-processor")
+        compile("org.springframework.boot:spring-boot-configuration-processor")
 //h2
         compile("com.h2database:h2")
 
@@ -69,21 +79,23 @@ subprojects {
 
 
         // Utils
+        compile("io.jsonwebtoken:jjwt:0.9.1")
         compile("org.modelmapper:modelmapper:2.3.2")
         compile("com.google.guava:guava:27.0-jre")
         compile("eu.bitwalker:UserAgentUtils:1.21")
         compile("org.imgscalr:imgscalr-lib:4.2")
 
         //Compile Only
-        compileOnly ("org.projectlombok:lombok")
+//        compileOnly ("org.projectlombok:lombok")
 
         // Runtime
         runtimeOnly("mysql:mysql-connector-java")
         runtimeOnly("org.springframework.boot:spring-boot-devtools")
-
+        implementation("com.thinkinglogic.builder:kotlin-builder-annotation:1.2.0")
+        kapt ("com.thinkinglogic.builder:kotlin-builder-processor:1.2.0")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         // Gradle 4.6 and later
-        annotationProcessor("org.projectlombok:lombok")
+//        annotationProcessor("org.projectlombok:lombok")
 
         // Test
         testImplementation("io.projectreactor:reactor-test")
