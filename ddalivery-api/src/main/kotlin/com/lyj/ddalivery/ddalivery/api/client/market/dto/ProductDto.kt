@@ -1,6 +1,8 @@
 package com.lyj.ddalivery.ddalivery.api.client.market.dto
 
+import com.lyj.ddalivery.ddalivery.entity.Category
 import com.lyj.ddalivery.ddalivery.entity.Product
+import com.lyj.ddalivery.ddalivery.entity.Seller
 import com.thinkinglogic.builder.annotation.Builder
 import javax.persistence.Column
 import javax.persistence.GeneratedValue
@@ -10,11 +12,13 @@ class ProductDto {
     data class Create(
             val name: String,
             var image: String,
+            val description : String,
             val price: Int,
             val recommendedRateCount: Int,
             val recommendedUserCount: Int,
-            val seller: String
+            val seller: Long,
+            val category : Long
     ) {
-        fun toEntity() : Product = Product(null,name,image,price,recommendedRateCount, recommendedUserCount, seller)
+        fun toEntity(seller: Seller,category: Category) : Product = Product(null,name,image,description,price,recommendedRateCount, recommendedUserCount,seller, category)
     }
 }

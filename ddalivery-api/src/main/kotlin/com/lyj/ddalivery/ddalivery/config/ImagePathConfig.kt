@@ -6,5 +6,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties(prefix = "ddalivery.path")
 data class ImagePathConfig(
-        var productImagePath : String = "a"
+        var imagePath : String = "default"
 )

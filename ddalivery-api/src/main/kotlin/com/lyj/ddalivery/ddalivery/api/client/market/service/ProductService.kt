@@ -2,11 +2,15 @@ package com.lyj.ddalivery.ddalivery.api.client.market.service
 
 import com.lyj.ddalivery.ddalivery.api.client.market.dto.ProductDto
 import com.lyj.ddalivery.ddalivery.api.client.market.repository.ProductRepository
-import com.lyj.ddalivery.ddalivery.api.response.ApiResponse
-import com.lyj.ddalivery.ddalivery.api.response.ApiResponseFactory
+import com.lyj.ddalivery.api.response.ApiResponse
+import com.lyj.ddalivery.api.response.ApiResponseFactory
+import com.lyj.ddalivery.ddalivery.api.client.market.repository.CategoryRepository
+import com.lyj.ddalivery.ddalivery.api.client.market.repository.SellerRepository
 import com.lyj.ddalivery.ddalivery.config.ImagePathConfig
 import com.lyj.ddalivery.ddalivery.entity.Product
+import com.lyj.ddalivery.ddalivery.exception.product.CategoryNotFoundException
 import com.lyj.ddalivery.ddalivery.exception.product.FileNotSaveException
+import com.lyj.ddalivery.ddalivery.exception.product.SellerNotFoundException
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,18 +27,20 @@ import java.util.*
 @Service
 class ProductService @Autowired constructor(
         val productRepository: ProductRepository,
+        val sellerRepository: SellerRepository,
+        val categoryRepository: CategoryRepository,
         val settings: ImagePathConfig
 ) {
     fun getProduct(pageable: Pageable): ApiResponse<*> = ApiResponseFactory.createOK(productRepository.findAll(pageable))
 
-    fun createProduct(dto: ProductDto.Create) : ApiResponse<*> {
+    fun createProduct(dto: ProductDto.Create): ApiResponse<*> {
         println(settings)
         saveImage(dto)
         return ApiResponseFactory.DEFAULT_OK
     }
 
 
-    fun saveImage(dto: ProductDto.Create) : ApiResponse<*>{
+    fun saveImage(dto: ProductDto.Create): ApiResponse<*> {
         val today = LocalDateTime.now()
         val permission = HashSet<PosixFilePermission>()
         //Adding owner's file permissions
@@ -48,22 +54,34 @@ class ProductService @Autowired constructor(
         permission.add(PosixFilePermission.OTHERS_WRITE)
 
         try {
-            val productImage = Paths.get(settings.productImagePath, today.format(DateTimeFormatter.ofPattern("yyyyMMdd")))
+            val productImage = Paths.get(settings.imagePath, "product", today.format(DateTimeFormatter.ofPattern("yyyyMMdd")))
             Files.createDirectories(productImage)
             Files.setPosixFilePermissions(productImage, permission)
 
             val builderFile = StringBuilder()
             val targetPath = Paths.get(productImage.toString(),
                     builderFile.append(dto.seller).append("_").append(today.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
-                            .append("_").append(dto.name).append(".jpg").toString())
+                            .append("_").append(".jpg").toString())
 
             Files.write(targetPath, Base64.decodeBase64(dto.image))
             Files.setPosixFilePermissions(targetPath, permission)
 
-            dto.image = StringUtils.substringAfter(targetPath.toString(),settings.productImagePath)
-            productRepository.save(dto.toEntity())
+            dto.image = StringUtils.substringAfter(targetPath.toString(), settings.imagePath)
+
+
+            productRepository.save(dto.toEntity(
+                    sellerRepository.findById(dto.seller).orElseThrow(::SellerNotFoundException),
+                    categoryRepository.findById(dto.category).orElseThrow(::CategoryNotFoundException)
+            ))
+
             return ApiResponseFactory.DEFAULT_OK
-        }catch (e : Exception){
+        } catch (e: SellerNotFoundException) {
+            e.printStackTrace()
+            return ApiResponseFactory.createException(SellerNotFoundException())
+        } catch (e: CategoryNotFoundException) {
+            e.printStackTrace()
+            return ApiResponseFactory.createException(CategoryNotFoundException())
+        } catch (e: Exception) {
             e.printStackTrace()
             return ApiResponseFactory.createException(FileNotSaveException())
         }
