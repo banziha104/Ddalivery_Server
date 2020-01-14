@@ -20,6 +20,7 @@ allprojects {
     repositories {
         // 요게 없으면 Cannot resolve external dependency org.jetbrains.kotlin:kotlin-compiler-embeddable:1.3.21 because no repositories are defined. 발생
         jcenter() // mavenCentral 인건 상관없네.
+        mavenCentral()
     }
 }
 
@@ -56,6 +57,7 @@ subprojects {
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter-websocket")
 
+
 //        compile("org.projectlombok:lombok:1.18.4")
 
         /**
@@ -77,6 +79,10 @@ subprojects {
         compile("org.apache.commons:commons-pool2:2.6.0")
         compile("commons-beanutils:commons-beanutils:1.9.3")
 
+        compile("com.vividsolutions:jts:1.13")
+        compile("org.hibernate:hibernate-core:5.2.12.Final")
+        compile("org.hibernate:hibernate-spatial:5.2.12.Final")
+        compile("org.hibernate:hibernate-entitymanager:5.2.12.Final")
 
         // Utils
         compile("io.jsonwebtoken:jjwt:0.9.1")

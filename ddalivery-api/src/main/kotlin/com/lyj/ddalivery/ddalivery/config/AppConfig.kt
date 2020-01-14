@@ -1,6 +1,6 @@
 package com.lyj.ddalivery.ddalivery.config
 
-import ddalivery.jwt.JwtTokenProvider
+import com.lyj.ddalivery.jwt.JwtTokenProvider
 import io.netty.channel.ChannelOption
 import io.netty.handler.timeout.ReadTimeoutHandler
 import io.netty.handler.timeout.WriteTimeoutHandler
