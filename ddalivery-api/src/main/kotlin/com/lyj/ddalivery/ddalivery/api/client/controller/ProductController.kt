@@ -1,7 +1,7 @@
-package com.lyj.ddalivery.ddalivery.api.client.market.controller
+package com.lyj.ddalivery.ddalivery.api.client.controller
 
-import com.lyj.ddalivery.ddalivery.api.client.market.dto.ProductDto
-import com.lyj.ddalivery.ddalivery.api.client.market.service.ProductService
+import com.lyj.ddalivery.ddalivery.api.client.dto.ProductDto
+import com.lyj.ddalivery.ddalivery.api.client.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.web.bind.annotation.*
@@ -16,7 +16,7 @@ class ProductController @Autowired constructor(
         private val productService: ProductService
 ) {
     @GetMapping
-    fun getPage(pageable: Pageable) = productService.getProduct(pageable)
+    fun getPage(pageable: Pageable, @RequestParam("seller") seller : Array<Long>) = productService.getProduct(pageable,seller)
 
     @PostMapping
     fun create(@RequestBody productDto: ProductDto.Create) = productService.createProduct(productDto)

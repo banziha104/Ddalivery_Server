@@ -21,7 +21,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
-
   flyway:
     enabled: false
     encoding: UTF-8

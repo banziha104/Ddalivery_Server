@@ -1,13 +1,12 @@
-package com.lyj.ddalivery.ddalivery.api.client.market.service
+package com.lyj.ddalivery.ddalivery.api.client.service
 
-import com.lyj.ddalivery.ddalivery.api.client.market.dto.ProductDto
-import com.lyj.ddalivery.ddalivery.api.client.market.repository.ProductRepository
+import com.lyj.ddalivery.ddalivery.api.client.dto.ProductDto
+import com.lyj.ddalivery.ddalivery.api.client.repository.ProductRepository
 import com.lyj.ddalivery.api.response.ApiResponse
 import com.lyj.ddalivery.api.response.ApiResponseFactory
-import com.lyj.ddalivery.ddalivery.api.client.market.repository.CategoryRepository
-import com.lyj.ddalivery.ddalivery.api.client.market.repository.SellerRepository
+import com.lyj.ddalivery.ddalivery.api.client.repository.CategoryRepository
+import com.lyj.ddalivery.ddalivery.api.client.repository.SellerRepository
 import com.lyj.ddalivery.ddalivery.config.ImagePathConfig
-import com.lyj.ddalivery.ddalivery.entity.Product
 import com.lyj.ddalivery.ddalivery.exception.product.CategoryNotFoundException
 import com.lyj.ddalivery.ddalivery.exception.product.FileNotSaveException
 import com.lyj.ddalivery.ddalivery.exception.product.SellerNotFoundException
@@ -16,12 +15,14 @@ import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.attribute.PosixFilePermission
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.persistence.EntityManager
 
 
 @Service
@@ -29,12 +30,18 @@ class ProductService @Autowired constructor(
         val productRepository: ProductRepository,
         val sellerRepository: SellerRepository,
         val categoryRepository: CategoryRepository,
+        val entityManager : EntityManager,
         val settings: ImagePathConfig
 ) {
-    fun getProduct(pageable: Pageable): ApiResponse<*> = ApiResponseFactory.createOK(productRepository.findAll(pageable))
+    fun getProduct(pageable: Pageable, seller : Array<Long>): ApiResponse<*> = ApiResponseFactory.createOK(
+            productRepository
+                    .findAllBySellers(pageable,seller)
+                    .map{ProductDto.ProductResponse.from(it, arrayOf("category","seller"))}
+    )
 
+
+    @Transactional
     fun createProduct(dto: ProductDto.Create): ApiResponse<*> {
-        println(settings)
         saveImage(dto)
         return ApiResponseFactory.DEFAULT_OK
     }
@@ -68,12 +75,10 @@ class ProductService @Autowired constructor(
 
             dto.image = StringUtils.substringAfter(targetPath.toString(), settings.imagePath)
 
-
             productRepository.save(dto.toEntity(
                     sellerRepository.findById(dto.seller).orElseThrow(::SellerNotFoundException),
                     categoryRepository.findById(dto.category).orElseThrow(::CategoryNotFoundException)
             ))
-
             return ApiResponseFactory.DEFAULT_OK
         } catch (e: SellerNotFoundException) {
             e.printStackTrace()
@@ -85,6 +90,5 @@ class ProductService @Autowired constructor(
             e.printStackTrace()
             return ApiResponseFactory.createException(FileNotSaveException())
         }
-
     }
 }
