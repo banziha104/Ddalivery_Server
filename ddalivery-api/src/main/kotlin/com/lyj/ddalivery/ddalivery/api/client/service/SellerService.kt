@@ -19,7 +19,6 @@ class SellerService(
 
     @Transactional
     fun create(dto : SellerDto.Create) : ApiResponse<*>{
-
         return ApiResponseFactory.DEFAULT_OK
     }
 }

@@ -1,7 +1,7 @@
 spring:
   datasource:
     hikari: #https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
-      jdbcUrl: jdbc:mysql://localhost:3306/ddalivery?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      jdbcUrl: jdbc:mysql://localhost:3306/ddalivery?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
       username: lyj
       password: dl38349687
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,3 +29,20 @@ spring:
     console:
       enabled: false
 
+
+  output:
+    ansi:
+      enabled:
+        logging: always
+  level:
+    com:
+      tutorial:
+        springboot: DEBUG
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG

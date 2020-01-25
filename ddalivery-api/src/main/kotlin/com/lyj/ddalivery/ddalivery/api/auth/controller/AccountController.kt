@@ -20,7 +20,6 @@ class AccountController @Autowired constructor(
         private val accountService: AccountService
 ) {
 
-
     @PostMapping("signup")
     fun signUp(@RequestBody accountDto: AccountDto.Create) : ApiResponse<*> = accountService.signUp(accountDto)
 

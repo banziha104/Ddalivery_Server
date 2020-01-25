@@ -10,12 +10,14 @@ import com.lyj.ddalivery.ddalivery.config.ImagePathConfig
 import com.lyj.ddalivery.ddalivery.exception.product.CategoryNotFoundException
 import com.lyj.ddalivery.ddalivery.exception.product.FileNotSaveException
 import com.lyj.ddalivery.ddalivery.exception.product.SellerNotFoundException
+import javassist.NotFoundException
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.bind.annotation.RequestParam
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.attribute.PosixFilePermission
@@ -30,14 +32,36 @@ class ProductService @Autowired constructor(
         val productRepository: ProductRepository,
         val sellerRepository: SellerRepository,
         val categoryRepository: CategoryRepository,
-        val entityManager : EntityManager,
+        val entityManager: EntityManager,
         val settings: ImagePathConfig
 ) {
-    fun getProduct(pageable: Pageable, seller : Array<Long>): ApiResponse<*> = ApiResponseFactory.createOK(
+    /***
+     * 판매자 아이디를 통한 조회
+     * @param pageable Pageable
+     * @param seller Array<Long>
+     * @return ApiResponse<*>
+     */
+    fun getProductBySeller(pageable: Pageable, seller: Array<Long>): ApiResponse<*> = ApiResponseFactory.createOK(
             productRepository
-                    .findAllBySellers(pageable,seller)
-                    .map{ProductDto.ProductResponse.from(it, arrayOf("category","seller"))}
+                    .findAllBySellers(pageable, seller)
+                    .map { ProductDto.ProductResponse.from(it, arrayOf("category", "seller")) }
     )
+
+    /***
+     * 위치를 이용한 조회
+     * @param pageable Pageable
+     * @param latitude Double
+     * @param longitude Double
+     * @param limit Int
+     * @return ApiResponse<*>
+     */
+    fun getProductByLocation(pageable: Pageable, latitude: Double, longitude: Double, limit: Int): ApiResponse<*> {
+        val seller = sellerRepository.findAllByDistance(latitude, longitude, limit).map { it.sellerId!! }.toTypedArray()
+        return if (seller.isEmpty()) ApiResponseFactory.createException(SellerNotFoundException())
+        else ApiResponseFactory.createOK(productRepository
+                .findAllBySellers(pageable, seller)
+                .map { ProductDto.ProductResponse.from(it, arrayOf("category", "seller")) })
+    }
 
 
     @Transactional

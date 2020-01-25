@@ -13,6 +13,13 @@ class SellerController @Autowired constructor(
         val sellerService: SellerService
 ) {
 
+    /***
+     * 반경 내에 있는 판매자 조회
+     * @param latitude Double
+     * @param longitude Double
+     * @param limit Int
+     * @return ApiResponse<List<Response>>
+     */
     @GetMapping
     fun findByDistance(@RequestParam("latitude") latitude : Double,
                        @RequestParam("longitude") longitude : Double,
