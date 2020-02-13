@@ -43,7 +43,6 @@ class ProductDto {
                     if (it.contains("category")) response.category = CategoryDto.Response.of(p.category,false)
                     if (it.contains("seller")) response.seller = SellerDto.Response.of(p.seller,false)
                 }
-
                 return response
             }
         }

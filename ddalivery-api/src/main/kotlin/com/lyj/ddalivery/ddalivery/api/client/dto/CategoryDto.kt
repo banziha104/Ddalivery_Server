@@ -17,7 +17,6 @@ class CategoryDto{
             fun of(c : Category, isRelation : Boolean) : Response =
                     if (isRelation) Response(c.categoryId,c.categoryName,c.image,c.products)
                     else Response(c.categoryId,c.categoryName,c.image)
-
         }
     }
 }
