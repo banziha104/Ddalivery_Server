@@ -6,30 +6,37 @@ import com.lyj.ddalivery.ddalivery.entity.Order
 import com.lyj.ddalivery.ddalivery.entity.OrderGroup
 import javax.persistence.*
 
-class OrderDto{
-    data class Create(
-            val clientName : String,
-            val address : String,
-            val lat : Double,
-            val long : Double,
-            val totalPrice : Int,
-            val orders : List<Order>
-    ){
+class OrderDto {
 
+    data class Create(
+            val productId: Long,
+            val productName: String,
+            val image: String,
+            val description: String,
+            val price: Int,
+            val quantity: Int,
+            val sellerName: String,
+            val sellerAddress: String,
+            val categoryName: String
+            ) {
+        fun toEntity(): Order = Order(null, productId, productName, image, description, price, quantity,sellerName, sellerAddress, categoryName)
     }
 
+
     data class Response(
-            val orderGroupId : Long,
-            val clientName : String,
-            val address : String,
-            val lat : Double,
-            val long : Double,
-            val totalPrice : Int,
-            @JsonInclude(JsonInclude.Include.NON_NULL)
-            val orders : List<Order>? = null
-    ){
-        companion object{
-            fun from(o: OrderGroup) : Response = o.run { Response(orderGroupId, clientName, address, lat, long, totalPrice) }
+            val orderId: Long,
+            val productId: Long,
+            val productName: String,
+            val image: String,
+            val description: String,
+            val price: Int,
+            val quantity: Int,
+            val sellerName: String,
+            val sellerAddress: String,
+            val categoryName: String
+    ) {
+        companion object {
+            fun from(o: Order): Response = o.run { Response(orderId!!, productId, productName, image, description, price, quantity,sellerName, sellerAddress, categoryName) }
         }
     }
 }
