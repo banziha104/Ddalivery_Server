@@ -25,9 +25,6 @@ class OrderService @Autowired constructor(
         else ApiResponseFactory.createOK(OrderGroupDto.Response.from(result.get()))
     }
 
-
-
-
     @Transactional
     fun createOrder(dto : OrderGroupDto.Create) : ApiResponse<*>{
         val (group, orders) = dto.toEntity()
