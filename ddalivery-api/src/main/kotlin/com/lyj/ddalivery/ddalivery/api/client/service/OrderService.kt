@@ -14,6 +14,6 @@ import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 interface OrderService{
-    fun getOrderGroup(orderGroupId : Long) : ApiResponse<*>
+    fun getOrderGroup(orderGroupId : Array<Long>) : ApiResponse<*>
     fun createOrder(dto : OrderGroupDto.Create) : ApiResponse<*>
 }

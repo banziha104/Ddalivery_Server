@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class OrderController @Autowired constructor(private val orderService: OrderService){
 
     @GetMapping("{orderGroupId}")
-    fun getOrderGroup(@PathVariable("orderGroupId")orderGroupId : Long) : ApiResponse<*> = orderService.getOrderGroup(orderGroupId)
+    fun getOrderGroup(@PathVariable("orderGroupId")orderGroupId : Array<Long>) : ApiResponse<*> = orderService.getOrderGroup(orderGroupId)
 
     @PostMapping
     fun createOrder(@RequestBody dto : OrderGroupDto.Create) = orderService.createOrder(dto)

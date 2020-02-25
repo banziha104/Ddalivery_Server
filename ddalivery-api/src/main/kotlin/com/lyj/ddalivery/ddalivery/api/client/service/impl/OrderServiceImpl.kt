@@ -18,10 +18,10 @@ class OrderServiceImpl @Autowired constructor(
         private val orderGroupRepository: OrderGroupRepository,
         private val entityManager : EntityManager
 ) : OrderService{
-    override fun getOrderGroup(orderGroupId : Long) : ApiResponse<*> {
-        val result = orderGroupRepository.findById(orderGroupId)
-        return if (result.isEmpty) ApiResponseFactory.createException(OrderGroupNotFoundException())
-        else ApiResponseFactory.createOK(OrderGroupDto.Response.from(result.get()))
+    override fun getOrderGroup(orderGroupId : Array<Long>) : ApiResponse<*> {
+        val result = orderGroupRepository.findAllById(orderGroupId.toList())
+        return if (result.isEmpty()) ApiResponseFactory.createException(OrderGroupNotFoundException())
+        else ApiResponseFactory.createOK(result.map { OrderGroupDto.Response.from(it)})
     }
 
     @Transactional
@@ -32,7 +32,6 @@ class OrderServiceImpl @Autowired constructor(
             it.orderGroup = orderGroup
             orderRepository.save(it)
         }
-
-        return ApiResponseFactory.DEFAULT_OK
+        return ApiResponseFactory.createOK(orderGroup.orderGroupId)
     }
 }
