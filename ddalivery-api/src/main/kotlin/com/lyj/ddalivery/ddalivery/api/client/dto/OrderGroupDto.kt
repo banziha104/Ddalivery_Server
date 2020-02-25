@@ -7,33 +7,33 @@ import javax.persistence.Column
 
 class OrderGroupDto{
     data class Create(
+            val clientId : Int,
             val clientName : String,
             val address : String,
             val lat : Double,
             val long : Double,
-            val totalPrice : Int,
             var isMatched: Boolean,
             var isCompleted: Boolean,
             val orders : List<OrderDto.Create>
     ){
-        fun toEntity() : Pair<OrderGroup,List<Order>> = OrderGroup(null,clientName, address, lat, long, totalPrice,isMatched, isCompleted) to orders.map { it.toEntity() }
+        fun toEntity() : Pair<OrderGroup,List<Order>> = OrderGroup(null,clientId,clientName, address, lat, long,isMatched, isCompleted) to orders.map { it.toEntity() }
     }
 
 
     data class Response(
             val orderGroupId : Long,
+            val clientId : Int,
             val clientName : String,
             val address : String,
             val lat : Double,
             val long : Double,
-            val totalPrice : Int,
             var isMatched: Boolean,
             var isCompleted: Boolean,
             @JsonInclude(JsonInclude.Include.NON_NULL)
             val orders : List<OrderDto.Response>? = null
     ){
         companion object{
-            fun from(o: OrderGroup) : Response = o.run { Response(orderGroupId!!, clientName, address, latitude, longitude, totalPrice, isMatched, isCompleted, orders?.map { OrderDto.Response.from(it) }) }
+            fun from(o: OrderGroup) : Response = o.run { Response(orderGroupId!!,clientId,clientName, address, latitude, longitude, isMatched, isCompleted, orders?.map { OrderDto.Response.from(it) }) }
         }
     }
 

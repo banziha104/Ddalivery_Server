@@ -13,27 +13,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
-@Service
-class OrderService @Autowired constructor(
-        private val orderRepository: OrderRepository,
-        private val orderGroupRepository: OrderGroupRepository,
-        private val entityManager : EntityManager
-){
-    fun getOrderGroup(orderGroupId : Long) : ApiResponse<*> {
-        val result = orderGroupRepository.findById(orderGroupId)
-        return if (result.isEmpty) ApiResponseFactory.createException(OrderGroupNotFoundException())
-        else ApiResponseFactory.createOK(OrderGroupDto.Response.from(result.get()))
-    }
-
-    @Transactional
-    fun createOrder(dto : OrderGroupDto.Create) : ApiResponse<*>{
-        val (group, orders) = dto.toEntity()
-        val orderGroup =  orderGroupRepository.save(group)
-        orders.forEach {
-            it.orderGroup = orderGroup
-            orderRepository.save(it)
-        }
-
-        return ApiResponseFactory.DEFAULT_OK
-    }
+interface OrderService{
+    fun getOrderGroup(orderGroupId : Long) : ApiResponse<*>
+    fun createOrder(dto : OrderGroupDto.Create) : ApiResponse<*>
 }
