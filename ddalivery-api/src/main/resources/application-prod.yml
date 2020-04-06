@@ -1,7 +1,7 @@
 spring:
   datasource:
     hikari: #https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
-      jdbcUrl: jdbc:mysql://ec2-54-180-97-228.ap-northeast-2.compute.amazonaws.com:3306/ddalivery?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
+      jdbcUrl: jdbc:mysql://ec2-13-209-88-6.ap-northeast-2.compute.amazonaws.com:3306/ddalivery?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
       username: root
       password: mypass
       driver-class-name: com.mysql.cj.jdbc.Driver
