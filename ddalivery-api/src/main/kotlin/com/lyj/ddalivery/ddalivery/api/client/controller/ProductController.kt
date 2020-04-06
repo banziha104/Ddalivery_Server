@@ -1,5 +1,6 @@
 package com.lyj.ddalivery.ddalivery.api.client.controller
 
+import com.lyj.ddalivery.api.response.ApiResponse
 import com.lyj.ddalivery.ddalivery.api.client.dto.ProductDto
 import com.lyj.ddalivery.ddalivery.api.client.service.ProductService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +23,9 @@ class ProductController @Autowired constructor(
      * @param seller Array<Long> 판매자 아이디
      * @return ApiResponse<*>
      */
+    @GetMapping("all")
+    fun getAllProduct() : ApiResponse<*> = productService.getAllProduct()
+
     @GetMapping("seller")
     fun getPageBySeller(pageable: Pageable, @RequestParam("seller") seller : Array<Long>) = productService.getProductBySeller(pageable,seller)
 

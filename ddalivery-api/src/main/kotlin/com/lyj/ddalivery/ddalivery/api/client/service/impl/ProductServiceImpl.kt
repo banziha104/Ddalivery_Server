@@ -33,6 +33,8 @@ class ProductServiceImpl @Autowired constructor(
         val entityManager: EntityManager,
         val settings: ImagePathConfig
 ) : ProductService {
+
+
     /***
      * 판매자 아이디를 통한 조회
      * @param pageable Pageable
@@ -44,6 +46,9 @@ class ProductServiceImpl @Autowired constructor(
                     .findAllBySellers(pageable, seller)
                     .map { ProductDto.ProductResponse.from(it, arrayOf("category", "seller")) }
     )
+
+    override fun getAllProduct(): ApiResponse<*> = ApiResponseFactory.createOK(productRepository.findAll().map { ProductDto.ProductResponse.from(it, arrayOf("category","seller")) })
+
 
     /***
      * 위치를 이용한 조회

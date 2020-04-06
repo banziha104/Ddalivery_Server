@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(value = ["/api/order"])
 class OrderController @Autowired constructor(private val orderService: OrderService){
 
-    @GetMapping("{orderGroupId}")
-    fun getOrderGroup(@PathVariable("orderGroupId")orderGroupId : Array<Long>) : ApiResponse<*> = orderService.getOrderGroup(orderGroupId)
+    @GetMapping
+    fun getOrderGroup(@RequestParam("orderGroupId")orderGroupId : Array<Long>) : ApiResponse<*> = orderService.getOrderGroup(orderGroupId)
 
     @PostMapping
     fun createOrder(@RequestBody dto : OrderGroupDto.Create) = orderService.createOrder(dto)

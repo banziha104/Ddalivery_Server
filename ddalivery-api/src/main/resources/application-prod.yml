@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    hikari: #https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
+      jdbcUrl: jdbc:mysql://ec2-54-180-97-228.ap-northeast-2.compute.amazonaws.com:3306/ddalivery?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
+      username: root
+      password: mypass
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+      minimumIdle: 40
+      maximumPoolSize: 40
+  jpa:
+    database: mysql
+    show-sql: false
+    generate-ddl: false
+
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+  flyway:
+    enabled: false
+    encoding: UTF-8
+
+  h2:
+    console:
+      enabled: false
+
+
+  output:
+    ansi:
+      enabled:
+        logging: always
+  level:
+    com:
+      tutorial:
+        springboot: DEBUG
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG

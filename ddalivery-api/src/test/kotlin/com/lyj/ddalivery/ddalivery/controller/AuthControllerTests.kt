@@ -6,6 +6,7 @@ import com.lyj.ddalivery.ddalivery.core.BaseControllerTest
 import com.lyj.ddalivery.ddalivery.utils.`null`
 import com.lyj.ddalivery.ddalivery.utils.number
 import com.lyj.ddalivery.ddalivery.utils.string
+import org.junit.Ignore
 import org.junit.Test
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -16,6 +17,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
+@Ignore
 class AuthControllerTests : BaseControllerTest() {
 
     @Test

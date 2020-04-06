@@ -29,6 +29,7 @@ import javax.persistence.EntityManager
 
 interface ProductService {
     fun getProductBySeller(pageable: Pageable, seller: Array<Long>): ApiResponse<*>
+    fun getAllProduct() : ApiResponse<*>
     fun getProductByLocation(pageable: Pageable, latitude: Double, longitude: Double, limit: Int): ApiResponse<*>
     fun createProduct(dto: ProductDto.Create): ApiResponse<*>
 }
